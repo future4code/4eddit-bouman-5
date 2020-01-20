@@ -1,45 +1,79 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import styled from "styled-components";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { routes } from '../Router/index'
+import { routes } from "../Router"
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import styled from "styled-components";
+import { login } from "../../actions";
 
+const LoginWrapper = styled.form`
+  width: 100%;
+  height: 100vh;
+  gap: 10px;
+  place-content: center;
+  justify-items: center;
+  display: grid;
+`;
 
+class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
 
+  handleFieldChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
 
-class LoginPage extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
+  handleLoginButton = () => {
+    const { email, password } = this.state;
 
-        }
-    }
+    this.props.login ( email, password )
+  }
 
-    render(){
+  render() {
+    const { email, password } = this.state;
+    const { goToSignUpScreen } = this.props;
 
-      const { goToFeedScreen , goToSignUpScreen } = this.props
-
-        return(
-            <div>
-              <Button onClick={goToFeedScreen}>Entrar</Button>
-              <Button onClick={goToSignUpScreen}>Cadastrar</Button>
-            </div>
-        )
-    }
-
+    return (
+      <form>
+        <LoginWrapper>
+          <TextField
+            onChange={this.handleFieldChange}
+            name="email"
+            type="email"
+            label="E-mail"
+            value={email}
+          />
+          <TextField
+            onChange={this.handleFieldChange}
+            name="password"
+            type="password"
+            label="Password"
+            value={password}
+          />
+          <Button onClick = {this.handleLoginButton}>Entrar</Button>
+          <Button onClick = {goToSignUpScreen}>Cadastro</Button>
+        </LoginWrapper>
+      </form>
+    );
+  }
 }
 
-const mapStateToProps = (state) =>({
-    
+const mapDispathToProps = (dispath) => ({
+    goToSignUpScreen: () => dispath(push(routes.signUp)),
+    login: (email, password) => dispath (login(email, password))
 })
 
-const mapDispatchToProps = (dispatch) =>({
-    goToFeedScreen: () => dispatch(push(routes.feed)) ,
-    goToSignUpScreen: () => dispatch(push(routes.signUp)) 
-})
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect
+(
+  null,
+  mapDispathToProps
+)
+(LoginPage);
