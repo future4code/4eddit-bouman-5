@@ -3,7 +3,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "../LoginPage";
 import FeedPage from '../FeedPage';
-import PostDatailsPage from '../PostDatailsPage';
+import PostDatailsPage from '../PostDetailsPage';
 import SignUpPage from '../SignUpPage'
 
 export const routes = {

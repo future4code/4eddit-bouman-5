@@ -4,6 +4,30 @@ import { routes } from '../containers/Router';
 
 const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
+
+const setPostAction = (posts) => ({
+    type: "SET_POSTS_ACTION",
+    payload: {
+        posts,
+    }
+}) 
+
+export const getPosts = () => async (dispatch) => {
+
+    const token = window.localStorage.getItem("token")
+
+    try {
+        const response = await axios.get (`${baseUrl}/posts`, {
+            headers: {
+                auth: token
+            }
+        })
+        dispatch(setPostAction(response.data.posts))
+    } catch (error) {
+        window.alert ("Erro de renderização")
+    }
+}
+
 export const login = (email, password) => async (dispatch) => {
 
     const login = {
