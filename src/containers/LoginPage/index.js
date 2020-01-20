@@ -44,6 +44,7 @@ class LoginPage extends Component {
     return (
       <form>
         <LoginWrapper>
+          <h1>Log in</h1>
           <TextField
             onChange={this.handleFieldChange}
             name="email"
