@@ -9,7 +9,7 @@ import { routes } from '../Router/index'
 
 
 
-class LoginPage extends React.Component{
+class FeedPage extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -19,12 +19,10 @@ class LoginPage extends React.Component{
 
     render(){
 
-      const { goToFeedScreen , goToSignUpScreen } = this.props
-
+        const {goToPostPageDetails} = this.props
         return(
             <div>
-              <Button onClick={goToFeedScreen}>Entrar</Button>
-              <Button onClick={goToSignUpScreen}>Cadastrar</Button>
+                <Button onClick={goToPostPageDetails}>Detalhes</Button>
             </div>
         )
     }
@@ -36,10 +34,9 @@ const mapStateToProps = (state) =>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-    goToFeedScreen: () => dispatch(push(routes.feed)) ,
-    goToSignUpScreen: () => dispatch(push(routes.signUp)) 
+    goToPostPageDetails: () => dispatch(push(routes.postDetails))
 })
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedPage);
