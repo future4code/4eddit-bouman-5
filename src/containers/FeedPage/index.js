@@ -17,6 +17,13 @@ class FeedPage extends React.Component{
         }
     }
 
+    componentDidMount() {
+        const token = window.localStorage.getItem("token")
+        if(token === null){
+          this.props.goToLoginPage()
+        }
+    }
+
     render(){
 
         const {goToPostPageDetails} = this.props
@@ -34,7 +41,8 @@ const mapStateToProps = (state) =>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-    goToPostPageDetails: () => dispatch(push(routes.postDetails))
+    goToPostPageDetails: () => dispatch(push(routes.postDetails)),
+    goToLoginPage: () => dispatch(push(routes.root))
 })
 
 

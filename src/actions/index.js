@@ -10,7 +10,7 @@ export const login = (email, password) => async (dispatch) => {
         email,
         password,
     }
-
+    console.log(login)
     try {
         const response = await axios.post (`${baseUrl}/login`, login)
         window.localStorage.setItem("token", response.data.token)
@@ -19,4 +19,17 @@ export const login = (email, password) => async (dispatch) => {
         window.alert("Usuário ou senha inválidos")
     }
 
+}
+
+export const signUp = (email, password, username) => async (dispatch) =>{
+    const signUp = {
+        email,
+        password,
+        username,
+    }
+
+    
+        await axios.post(`${baseUrl}/signup`, signUp)
+        dispatch(push(routes.root))
+    
 }

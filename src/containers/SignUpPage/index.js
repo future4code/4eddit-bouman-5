@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
+import { signUp } from '../../actions/index'
 
 const signUpForm = [
     {
-       name: 'name',
+       name: 'username',
        type: 'text',
        label: 'Usuário ',
        required: true,
@@ -61,6 +62,11 @@ class SignUpPage extends React.Component{
         console.log(this.state.form)
     }
 
+    onHandleSignUp = () =>{
+        const { email, password, username } = this.state.form
+        this.props.signUp(email, password, username)
+    }
+
     render(){
 
         const { goToLoginPage } = this.props
@@ -79,7 +85,7 @@ class SignUpPage extends React.Component{
                             pattern={input.pattern}
                         />
                     ))}
-                    <Button onClick={goToLoginPage}> Sign Up </Button>
+                    <Button onClick={this.onHandleSignUp}> Sign Up </Button>
                 </SignUpWrapper>
                 
             </div>
@@ -93,7 +99,8 @@ const mapStateToProps = (state) =>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-    goToLoginPage: () => dispatch(push(routes.root))
+    
+    signUp: (email, password, username) => dispatch(signUp(email, password, username))
 })
 
 
