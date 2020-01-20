@@ -17,6 +17,13 @@ class PostDetailsPage extends React.Component{
         }
     }
 
+    componentDidMount() {
+        const token = window.localStorage.getItem("token")
+        if(token === null){
+          this.props.goToLoginPage()
+        }
+    }
+
     render(){
 
         const { goBackToFeed } = this.props
@@ -34,7 +41,8 @@ const mapStateToProps = (state) =>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-    goBackToFeed: () => dispatch(push(routes.feed))
+    goBackToFeed: () => dispatch(push(routes.feed)),
+    goToLoginPage: () => dispatch(push(routes.root))
 })
 
 
