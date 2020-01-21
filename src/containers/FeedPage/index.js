@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import styled from "styled-components";
+import styled, { ThemeConsumer } from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index';
 import Comment from "@material-ui/icons/Comment"
 import ArrowUpward from "@material-ui/icons/ArrowUpward"
 import ArrowDownward from "@material-ui/icons/ArrowDownward"
-import { getPosts, createPost, setPostIdAction } from '../../actions'
+import { getPosts, createPost, setPostIdAction, votePost } from '../../actions'
 
 // Estilização
 
@@ -171,6 +171,11 @@ class FeedPage extends React.Component{
         this.props.goToPostPageDetails()
     }
 
+    // handleUpVoteClick = (postId, direction) => {
+        
+    //     this.props.votePost(postId, direction)
+    // }
+
     render() {
         
         return(
@@ -204,7 +209,11 @@ class FeedPage extends React.Component{
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
-                          <P><ArrowUpward/>{post.votesCount}<ArrowDownward/></P>
+                          <P>
+                              <ArrowUpward onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}/>
+                              {post.votesCount}
+                              <ArrowDownward onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}/>
+                          </P>
                           <P>{post.commentsNumber} <Comment/></P>
                       </CardFooter>
                   </CardContainer>  
@@ -224,7 +233,8 @@ const mapDispatchToProps = (dispatch) => ({
     goToLoginPage: () => dispatch(push(routes.root)),
     getPosts: () => dispatch(getPosts()),
     createPost: ( text, title ) => dispatch(createPost( text, title )),
-    setPostId: (postId) => dispatch(setPostIdAction(postId))
+    setPostId: (postId) => dispatch(setPostIdAction(postId)),
+    votePost: (postId, direction, userVoteDirection) => (dispatch(votePost(postId, direction, userVoteDirection)))
 })
 
 

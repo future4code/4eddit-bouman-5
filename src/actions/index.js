@@ -1,6 +1,7 @@
 import axios from 'axios';
 import  { push } from 'connected-react-router'
 import { routes } from '../containers/Router';
+import Axios from 'axios';
 
 const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
@@ -37,26 +38,79 @@ export const setCommentIdAction = (commentId) => ({
 
 // Votar no post
 
-export const votePost = (postId, direction) => async (dispatch) => {
+// export const votePost = (postId, direction) => async (dispatch) => {
 
-    const token = window.localStorage.getItem("token")
+//     const token = window.localStorage.getItem("token")
 
-    const newPostVoteDirection = {
-        direction,
-    }
+//     const newPostVoteDirection = {
+//         direction: direction + 1,
+//     }
 
-    try {
-        await axios.put (`${baseUrl}/posts/${postId}`, newPostVoteDirection, {
-            headers: {
-                auth: token
-            }
-        })
-        dispatch(getPosts(postId))
-    } catch (error) {
-        window.alert("Erro ao votar")
-    }
+//     try {
+//         await axios.put (`${baseUrl}/posts/${postId}/vote`, newPostVoteDirection, {
+//             headers: {
+//                 auth: token
+//             }
+//         })
+//         dispatch(getPosts(postId))
+//     } catch (error) {
+//         window.alert("Erro ao votar")
+//     }
     
+// }
+
+export const votePost = (postId, direction, userVoteDirection) => async (dispatch) => {
+    const token = window.localStorage.getItem("token")    
+    if (userVoteDirection === direction){
+        try {
+            await Axios.put (
+                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
+                
+                {
+                    "direction": 0,               
+                },
+        
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth": token
+                    } 
+                },
+        
+            )
+                dispatch(getPosts())
+        }
+        catch (error) {
+            alert("Ocorreu um erro, tente novamente")
+            console.log(error)
+        }
+    }
+    else{
+        try {
+            await Axios.put (
+                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
+                
+                {
+                    "direction": direction,               
+                },
+        
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth": token
+                    } 
+                },
+        
+            )
+            dispatch(getPosts())
+        } catch (error) {
+            alert("Ocorreu um erro, tente novamente")
+            console.log(error)
+        }
+    }
 }
+
+
 
 // votar no Comentário
 
