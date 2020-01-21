@@ -36,7 +36,6 @@ const CardContainer = styled.div `
     box-shadow: 0px 0px 5px;
     :hover {
         box-shadow: 0px 0px 10px;
-        cursor: pointer;
     }
 `
 
@@ -56,6 +55,9 @@ const CardMain = styled.main `
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    :hover {
+        cursor: pointer;
+    }
 `
 
 const CardFooter = styled.footer `
@@ -156,7 +158,7 @@ class FeedPage extends React.Component{
 
     }
 
-    handleTripId = (postId) => {
+    handlePostId = (postId) => {
         this.props.setPostId(postId)
         console.log(postId)
 
@@ -191,7 +193,7 @@ class FeedPage extends React.Component{
                       <CardHeader>
                         <P>{post.username}</P>
                       </CardHeader>
-                      <CardMain onClick = {() => this.handleTripId(post.id)}>
+                      <CardMain onClick = {() => this.handlePostId(post.id)}>
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
