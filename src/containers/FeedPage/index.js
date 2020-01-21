@@ -8,7 +8,7 @@ import { routes } from '../Router/index';
 import Comment from "@material-ui/icons/Comment"
 import ArrowUpward from "@material-ui/icons/ArrowUpward"
 import ArrowDownward from "@material-ui/icons/ArrowDownward"
-import { getPosts, createPost, setPostDetailsAction } from '../../actions'
+import { getPosts, createPost, setPostIdAction } from '../../actions'
 
 // Estilização
 
@@ -160,15 +160,14 @@ class FeedPage extends React.Component{
 
     }
 
-    handlePostId = (postId) => {
+    handleSetPostId = (postId) => {
         this.props.setPostId(postId)
-        console.log(postId)
 
         this.props.goToPostPageDetails()
     }
 
     render() {
-
+        
         return(
             <Container>
                 <FormContainer>
@@ -195,7 +194,7 @@ class FeedPage extends React.Component{
                       <CardHeader>
                         <P>{post.username}</P>
                       </CardHeader>
-                      <CardMain onClick = {() => this.handlePostId(post.id)}>
+                      <CardMain onClick = {() => this.handleSetPostId(post.id)}>
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
@@ -219,7 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
     goToLoginPage: () => dispatch(push(routes.root)),
     getPosts: () => dispatch(getPosts()),
     createPost: ( text, title ) => dispatch(createPost( text, title )),
-    setPostId: (postId) => dispatch(setPostDetailsAction(postId))
+    setPostId: (postId) => dispatch(setPostIdAction(postId))
 })
 
 

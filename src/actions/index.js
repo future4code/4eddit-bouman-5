@@ -6,18 +6,26 @@ const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
 
 const setPostAction = (posts) => ({
-    type: "GET_POSTS_ACTION",
+    type: "SET_POSTS_ACTION",
     payload: {
         posts,
     }
 }) 
 
-export const setPostDetailsAction = (postId) => ({
-    type: "GET_POST_DETAIL_ACTION",
+export const setPostIdAction = (postId) => ({
+    type: "SET_POST_ID_ACTION",
     payload: {
         postId
     }
 })
+
+export const setPostDetailAction = (postDetail) => ({
+    type: "SET_POST_DETAIL",
+    payload: {
+        postDetail,
+    }
+})
+
 
 
 // ver detalhes de um post
@@ -25,7 +33,6 @@ export const setPostDetailsAction = (postId) => ({
 export const getPostDetails = (postId) => async (dispatch) => {
 
     const token = window.localStorage.getItem("token")
-
     try {
         const response = await axios.get (`${baseUrl}/posts/${postId}`, {
             headers: {
@@ -33,13 +40,37 @@ export const getPostDetails = (postId) => async (dispatch) => {
             }
         })
 
-        dispatch(setPostDetailsAction(response.data.postId))
+        dispatch(setPostDetailAction(response.data.post))
 
     } catch (error) {
         window.alert("Falha na renderização dos detalhes")
     }
 
 
+}
+
+// criar comentário
+
+export const createComment = (text, postId) => async (dispatch) => {
+
+    const newComment = {
+        text,
+    }
+
+    const token = window.localStorage.getItem("token")
+
+    try {
+        await axios.post (`${baseUrl}/posts/${postId}/comment`, newComment, {
+            headers: {
+                auth: token
+            }
+        })
+        window.alert("Comentário Criado com sucesso")
+        console.log("brian", postId)
+        dispatch(getPostDetails(postId))
+    } catch (error) {
+        window.alert("Falha ao criar o Comentário")
+    }
 }
 
 // criar post
@@ -92,7 +123,6 @@ export const login = (email, password) => async (dispatch) => {
         email,
         password,
     }
-    console.log(login)
     try {
         const response = await axios.post (`${baseUrl}/login`, login)
         window.localStorage.setItem("token", response.data.token)
