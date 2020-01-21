@@ -4,7 +4,10 @@ import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { routes } from '../Router/index'
+import { routes } from '../Router/index';
+import Comment from "@material-ui/icons/Comment"
+import ArrowUpward from "@material-ui/icons/ArrowUpward"
+import ArrowDownward from "@material-ui/icons/ArrowDownward"
 import { getPosts, createPost, setPostDetailsAction } from '../../actions'
 
 // Estilização
@@ -24,13 +27,16 @@ const CardContainer = styled.div `
     width: 300px;
     min-height: 230px;
     display: grid;
-    grid-template-rows: 40px 1.5fr 30px 40px;
+    grid-template-rows: 40px 1.5fr 40px 40px;
     justify-items: center;
     align-content: center;
     text-align: center; 
     margin: 10px;
     border-radius: 5px;
-    box-shadow: 0px 0px 10px;
+    box-shadow: 0px 0px 5px;
+    :hover {
+        box-shadow: 0px 0px 10px;
+    }
 `
 
 const CardHeader = styled.header `
@@ -39,6 +45,7 @@ const CardHeader = styled.header `
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
 `
 
 const CardMain = styled.main `
@@ -47,6 +54,7 @@ const CardMain = styled.main `
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
 `
 
 const CardFooter = styled.footer `
@@ -75,6 +83,7 @@ const FormContainer = styled.div `
 const P = styled.p `
     margin: 5px;
     padding: 0;
+    font-size: 15px;
 `
 
 const Input = styled.input `
@@ -133,6 +142,7 @@ class FeedPage extends React.Component{
         const { name, value } = event.target;
 
         this.setState ({ form: { ...this.state.form, [name]: value }});
+
     }
 
     handleCreatePost = event => {
@@ -141,10 +151,13 @@ class FeedPage extends React.Component{
         const { text, title } = this.state.form
 
         this.props.createPost ( text, title )
+
+
     }
 
     handleTripId = (postId) => {
         this.props.setPostId(postId)
+        console.log(postId)
 
         this.props.goToPostPageDetails()
     }
@@ -181,8 +194,8 @@ class FeedPage extends React.Component{
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
-                          <P>Votes: {post.votesCount}</P>
-                          <P>{post.commentsNumber} :Comments</P>
+                          <P><ArrowUpward/>{post.votesCount}<ArrowDownward/></P>
+                          <P>{post.commentsNumber} <Comment/></P>
                       </CardFooter>
                       <Button onClick = {() => this.handleTripId(post.id)}>Post Details</Button>
                   </CardContainer>  
