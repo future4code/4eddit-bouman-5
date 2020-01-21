@@ -65,6 +65,7 @@ class SignUpPage extends React.Component{
     onHandleSignUp = () =>{
         const { email, password, username } = this.state.form
         this.props.signUp(email, password, username)
+        this.setState({form: {}})
     }
 
     render(){
