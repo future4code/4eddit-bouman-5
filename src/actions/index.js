@@ -35,30 +35,6 @@ export const setCommentIdAction = (commentId) => ({
 })
 
 
-
-// Votar no post
-
-// export const votePost = (postId, direction) => async (dispatch) => {
-
-//     const token = window.localStorage.getItem("token")
-
-//     const newPostVoteDirection = {
-//         direction: direction + 1,
-//     }
-
-//     try {
-//         await axios.put (`${baseUrl}/posts/${postId}/vote`, newPostVoteDirection, {
-//             headers: {
-//                 auth: token
-//             }
-//         })
-//         dispatch(getPosts(postId))
-//     } catch (error) {
-//         window.alert("Erro ao votar")
-//     }
-    
-// }
-
 export const votePost = (postId, direction, userVoteDirection) => async (dispatch) => {
     const token = window.localStorage.getItem("token")    
     if (userVoteDirection === direction){
