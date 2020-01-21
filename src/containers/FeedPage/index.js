@@ -181,8 +181,8 @@ class FeedPage extends React.Component{
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
-                          <P>Likes 0</P>
-                          <P>1 Comments</P>
+                          <P>Votes: {post.votesCount}</P>
+                          <P>{post.commentsNumber} :Comments</P>
                       </CardFooter>
                       <Button onClick = {() => this.handleTripId(post.id)}>Post Details</Button>
                   </CardContainer>  
