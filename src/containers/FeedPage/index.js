@@ -155,6 +155,8 @@ class FeedPage extends React.Component{
 
         this.props.createPost ( text, title )
 
+        this.setState({form: {}})
+
 
     }
 
