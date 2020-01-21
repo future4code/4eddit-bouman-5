@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
 import { getPostDetails, createComment } from "../../actions";
+import Comment from "@material-ui/icons/Comment"
+import ArrowUpward from "@material-ui/icons/ArrowUpward"
+import ArrowDownward from "@material-ui/icons/ArrowDownward"
 
 // Estilização
 
@@ -185,7 +188,8 @@ class PostDetailsPage extends React.Component{
                             <P>{selectedPost.text}</P>
                         </CardMain>
                         <CardFooter>
-
+                            <P><ArrowUpward/>{selectedPost.votesCount}<ArrowDownward/></P>
+                            <P>{selectedPost.commentsNumber} <Comment/></P>
                         </CardFooter>
                     </PostContainer>
                 <FormContainer>
@@ -216,7 +220,7 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-
+                            <P><ArrowUpward/>{comment.votesCount}<ArrowDownward/></P>
                         </CardFooter>
                     </CardContainer>
                 )}

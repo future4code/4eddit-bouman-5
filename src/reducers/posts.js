@@ -1,7 +1,8 @@
 const initialState = {
     allPosts: [],
     selectedPostId: "",
-    selectedPost: {}
+    selectedPost: {},
+
 }
 
 const posts = (state = initialState, action) => {
