@@ -27,7 +27,7 @@ const CardContainer = styled.div `
     width: 300px;
     min-height: 230px;
     display: grid;
-    grid-template-rows: 40px 1.5fr 40px 40px;
+    grid-template-rows: 40px 2fr 40px;
     justify-items: center;
     align-content: center;
     text-align: center; 
@@ -36,6 +36,7 @@ const CardContainer = styled.div `
     box-shadow: 0px 0px 5px;
     :hover {
         box-shadow: 0px 0px 10px;
+        cursor: pointer;
     }
 `
 
@@ -190,14 +191,13 @@ class FeedPage extends React.Component{
                       <CardHeader>
                         <P>{post.username}</P>
                       </CardHeader>
-                      <CardMain>
+                      <CardMain onClick = {() => this.handleTripId(post.id)}>
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
                           <P><ArrowUpward/>{post.votesCount}<ArrowDownward/></P>
                           <P>{post.commentsNumber} <Comment/></P>
                       </CardFooter>
-                      <Button onClick = {() => this.handleTripId(post.id)}>Post Details</Button>
                   </CardContainer>  
                 )}
             </Container>
