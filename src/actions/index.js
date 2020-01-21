@@ -26,7 +26,61 @@ export const setPostDetailAction = (postDetail) => ({
     }
 })
 
+export const setCommentIdAction = (commentId) => ({
+    type: "SET_COMMENT_ID_ACTION",
+    payload: {
+        commentId,
+    }
+})
 
+
+
+// Votar no post
+
+export const votePost = (postId, direction) => async (dispatch) => {
+
+    const token = window.localStorage.getItem("token")
+
+    const newPostVoteDirection = {
+        direction,
+    }
+
+    try {
+        await axios.put (`${baseUrl}/posts/${postId}`, newPostVoteDirection, {
+            headers: {
+                auth: token
+            }
+        })
+        dispatch(getPosts(postId))
+    } catch (error) {
+        window.alert("Erro ao votar")
+    }
+    
+}
+
+// votar no Comentário
+
+export const voteComment = (postId, commentId, direction) => async (dispatch) => {
+
+    const token = window.localStorage.getItem("token")
+
+    const newCommentVoteDirection = {
+        direction,
+    }
+    try {
+        await axios.put (`${baseUrl}/posts/${postId}/comment/${commentId}/vote`, newCommentVoteDirection, {
+            headers: {
+                auth: token
+            }
+        })
+
+        dispatch(getPostDetails(postId, commentId))
+
+    } catch (error) {
+        window.alert("Erro ao votar")
+    }
+    
+}
 
 // ver detalhes de um post
 
@@ -49,6 +103,24 @@ export const getPostDetails = (postId) => async (dispatch) => {
 
 }
 
+// mostrar postagens
+
+export const getPosts = () => async (dispatch) => {
+
+    const token = window.localStorage.getItem("token")
+
+    try {
+        const response = await axios.get (`${baseUrl}/posts`, {
+            headers: {
+                auth: token
+            }
+        })
+        dispatch(setPostAction(response.data.posts))
+    } catch (error) {
+        window.alert ("Erro de renderização")
+    }
+}
+
 // criar comentário
 
 export const createComment = (text, postId) => async (dispatch) => {
@@ -66,7 +138,7 @@ export const createComment = (text, postId) => async (dispatch) => {
             }
         })
         window.alert("Comentário Criado com sucesso")
-        console.log("brian", postId)
+        
         dispatch(getPostDetails(postId))
     } catch (error) {
         window.alert("Falha ao criar o Comentário")
@@ -96,24 +168,6 @@ export const createPost = (text, title) => async (dispatch) => {
         window.alert("Falha ao criar o Post")
     }
 } 
-
-// mostrar postagens
-
-export const getPosts = () => async (dispatch) => {
-
-    const token = window.localStorage.getItem("token")
-
-    try {
-        const response = await axios.get (`${baseUrl}/posts`, {
-            headers: {
-                auth: token
-            }
-        })
-        dispatch(setPostAction(response.data.posts))
-    } catch (error) {
-        window.alert ("Erro de renderização")
-    }
-}
 
 // logar na conta
 

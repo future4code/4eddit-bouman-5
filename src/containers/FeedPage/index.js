@@ -141,6 +141,11 @@ class FeedPage extends React.Component{
         }
     }
 
+    handleLogOut = () => {
+        localStorage.removeItem("token")
+        this.props.goToLoginPage()
+    }
+
     handleInputOnChange = event => {
         const { name, value } = event.target;
 
@@ -170,6 +175,7 @@ class FeedPage extends React.Component{
         
         return(
             <Container>
+                <Button onClick = {this.handleLogOut}>log Out</Button>
                 <FormContainer>
                     <form>
                         {createPostForm.map (input => (
