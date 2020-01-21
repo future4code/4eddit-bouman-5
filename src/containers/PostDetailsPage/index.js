@@ -176,7 +176,7 @@ class PostDetailsPage extends React.Component{
 
 
         const { goBackToFeed, selectedPost } = this.props
-
+        
         return(
             <Container>
                 <Button onClick = {goBackToFeed}>Voltar</Button>
@@ -220,7 +220,7 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P><ArrowUpward/>{comment.votesCount}<ArrowDownward/></P>
+                            <P><ArrowUpward onClick = {console.log(comment.id)}/>{comment.votesCount}<ArrowDownward/></P>
                         </CardFooter>
                     </CardContainer>
                 )}

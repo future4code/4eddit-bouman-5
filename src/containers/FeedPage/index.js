@@ -12,6 +12,24 @@ import { getPosts, createPost, setPostIdAction, votePost } from '../../actions'
 
 // Estilização
 
+const StyledArrowUpward = styled(ArrowUpward) `
+    :hover {
+        cursor: pointer;
+    }
+` 
+
+const StyledArrowDownward = styled(ArrowDownward) `
+    :hover {
+        cursor: pointer;
+    }
+` 
+
+const StyledComment = styled(Comment) `
+    :hover {
+        cursor: pointer;
+    }
+` 
+
 const Container = styled.div `
     width: 100%;
     height: 100%;
@@ -210,11 +228,11 @@ class FeedPage extends React.Component{
                       </CardMain>
                       <CardFooter>
                           <P>
-                              <ArrowUpward onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}/>
+                              <StyledArrowUpward onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}/>
                               {post.votesCount}
-                              <ArrowDownward onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}/>
+                              <StyledArrowDownward onClick={() => this.props.votePost(post.id, 0, this.props.userVoteDirection )}/>
                           </P>
-                          <P>{post.commentsNumber} <Comment/></P>
+                          <P>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></P>
                       </CardFooter>
                   </CardContainer>  
                 )}
