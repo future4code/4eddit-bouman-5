@@ -102,9 +102,17 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P><StyledArrowUpward onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}/>
-                                {comment.votesCount}
-                            <StyledArrowDownward onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}/></P>
+                            <P>
+                                <StyledArrowUpward 
+                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}
+                                color={comment.userVoteDirection > 1 ? "secondary" : ""}
+                            />
+                                    {comment.votesCount}
+                                <StyledArrowDownward
+                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}
+                                color={comment.userVoteDirection > 0 ? "primary" : ""}
+                             />
+                             </P>
                         </CardFooter>
                     </CardContainer>
                 )}
