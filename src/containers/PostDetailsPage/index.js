@@ -93,7 +93,13 @@ class PostDetailsPage extends React.Component{
                         <Button onClick = {this.handleCreateComment}> Enviar</Button>
                     </form>
                 </FormContainer>
-                {selectedPost.comments && selectedPost.comments.map((comment) =>
+                {selectedPost.comments && selectedPost.comments.sort((a,b) => {
+                    if (a.votesCount < b.votesCount) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }).map((comment) =>
                     <CardContainer>
                         <CardHeader>
                             <P>{comment.username}</P>

@@ -67,6 +67,9 @@ class FeedPage extends React.Component{
 
 
     render() {
+
+
+
         return(
             <Container>
                 <Button onClick = {this.handleLogOut}>log Out</Button>
@@ -89,7 +92,13 @@ class FeedPage extends React.Component{
                         <Button onClick = {this.handleCreatePost}> Enviar</Button>
                     </form>
                 </FormContainer>
-                {this.props.posts.map((post) =>
+                {this.props.posts.sort((a,b) => {
+                    if (a.votesCount < b.votesCount) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }).map((post) =>
                   <CardContainer>
                       <CardHeader>
                         <P>{post.username}</P>
