@@ -7,7 +7,7 @@ import { getPostDetails, createComment, voteComment } from "../../actions";
 import Comment from "@material-ui/icons/Comment";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import { StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, PostContainer, P, Input, Label } from "../PostDetailsPage/styled"
+import { StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, PostContainer, P, Input, Label, ArrowContainer } from "../PostDetailsPage/styled"
 
 // array do input
 const createCommentForm = [
@@ -108,7 +108,7 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P>
+                            <ArrowContainer>
                                 <StyledArrowUpward 
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}
                                 color={comment.userVoteDirection > 1 ? "secondary" : ""}
@@ -118,7 +118,7 @@ class PostDetailsPage extends React.Component{
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}
                                 color={comment.userVoteDirection > 0 ? "primary" : ""}
                              />
-                             </P>
+                             </ArrowContainer>
                         </CardFooter>
                     </CardContainer>
                 )}

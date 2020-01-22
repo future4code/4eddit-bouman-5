@@ -4,7 +4,21 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index';
 import { getPosts, createPost, setPostIdAction, votePost } from '../../actions'
-import { StyledArrowUpward, StyledArrowDownward, StyledComment, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, P, Input, Label } from '../FeedPage/styled'
+import { StyledArrowUpward, 
+         StyledArrowDownward, 
+         StyledComment, 
+         Container, 
+         CardContainer, 
+         CardHeader, 
+         CardMain, 
+         CardFooter, 
+         FormContainer, 
+         P, 
+         Input, 
+         Label, 
+         ArrowContainer,
+         CommentContainer
+        } from '../FeedPage/styled'
 
 // inputs do formulário
 const createPostForm = [
@@ -107,7 +121,7 @@ class FeedPage extends React.Component{
                         <P>{post.text}</P>
                       </CardMain>
                       <CardFooter>
-                          <P>
+                          <ArrowContainer>
                               <StyledArrowUpward 
                               onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}
                               color={post.userVoteDirection > 0 ? "secondary" : ""}
@@ -117,8 +131,8 @@ class FeedPage extends React.Component{
                               onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}
                               color={post.userVoteDirection < 0 ? "primary" : ""}
                               />
-                          </P>
-                          <P>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></P>
+                          </ArrowContainer>
+                          <CommentContainer>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></CommentContainer>
                       </CardFooter>
                   </CardContainer>  
                 )}
