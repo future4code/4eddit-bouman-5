@@ -131,7 +131,7 @@ class PostDetailsPage extends React.Component{
                                     {comment.votesCount}
                                 <StyledArrowDownward
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, -1, this.props.userVoteDirection)}
-                                color={comment.userVoteDirection > 0 ? "primary" : ""}
+                                color={comment.userVoteDirection < 0 ? "primary" : ""}
                              />
                              </ArrowContainer>
                         </CardFooter>
