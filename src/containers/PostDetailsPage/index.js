@@ -7,7 +7,8 @@ import { getPostDetails, createComment, voteComment } from "../../actions";
 import Comment from "@material-ui/icons/Comment";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import { StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, PostContainer, P, Input, Label } from "../PostDetailsPage/styled"
+import Foureddit from "../../4eddit.png"
+import { BackToTopButton, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../FeedPage/styled"
 
 // array do input
 const createCommentForm = [
@@ -18,6 +19,7 @@ const createCommentForm = [
         required: true
     }
 ]
+
 
 class PostDetailsPage extends React.Component{
     constructor(props){
@@ -61,7 +63,16 @@ class PostDetailsPage extends React.Component{
         
         return(
             <Container>
-                <Button onClick = {goBackToFeed}>Voltar</Button>
+                <StyledHeader>
+                    <LogoContainer>
+                        <StyledImg src = {Foureddit}/>
+                    </LogoContainer>
+                    <MenuContainer>
+                        <StyledButton onClick = {goBackToFeed} id = "voltar">Voltar</StyledButton>
+                    </MenuContainer>
+                </StyledHeader>
+                <StyledMain>
+                    <BackToTopButton href = "#voltar" id = "voltar">voltar pro topo</BackToTopButton>
                     <PostContainer>
                         <CardHeader>
                             <P>{selectedPost.username}</P>
@@ -74,7 +85,7 @@ class PostDetailsPage extends React.Component{
                             <P>{selectedPost.commentsNumber} <Comment/></P>
                         </CardFooter>
                     </PostContainer>
-                <FormContainer>
+                <FormContainer2>
                     <form>
                         {createCommentForm.map (input => (
                             <div key = {input.name}>
@@ -92,7 +103,7 @@ class PostDetailsPage extends React.Component{
                         ))}
                         <Button onClick = {this.handleCreateComment}> Enviar</Button>
                     </form>
-                </FormContainer>
+                </FormContainer2>
                 {selectedPost.comments && selectedPost.comments.sort((a,b) => {
                     if (a.votesCount < b.votesCount) {
                         return 1;
@@ -122,6 +133,7 @@ class PostDetailsPage extends React.Component{
                         </CardFooter>
                     </CardContainer>
                 )}
+                </StyledMain>
             </Container>
         )
     }

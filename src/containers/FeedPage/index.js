@@ -3,8 +3,9 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index';
-import { getPosts, createPost, setPostIdAction, votePost } from '../../actions'
-import { StyledArrowUpward, StyledArrowDownward, StyledComment, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, P, Input, Label } from '../FeedPage/styled'
+import { getPosts, createPost, setPostIdAction, votePost } from '../../actions';
+import Foureddit from "../../4eddit.png"
+import { BackToTopButton, StyledImg, StyledHeader, StyledMain, LogoContainer, MenuContainer, StyledButton, StyledArrowUpward, StyledArrowDownward, StyledComment, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, P, Input, Label } from '../FeedPage/styled'
 
 // inputs do formulário
 const createPostForm = [
@@ -21,6 +22,7 @@ const createPostForm = [
         required: true
     }
 ]
+
 
 class FeedPage extends React.Component{
     constructor(props){
@@ -72,56 +74,66 @@ class FeedPage extends React.Component{
 
         return(
             <Container>
-                <Button onClick = {this.handleLogOut}>log Out</Button>
-                <FormContainer>
-                    <form>
-                        {createPostForm.map (input => (
-                            <div key = {input.name}>
-                                <Label htmlFor = {input.name}>{input.label}</Label>
-                                <Input
-                                    id = {input.id}
-                                    name = {input.name}
-                                    type = {input.type}
-                                    value = {this.state.form[input.name] || ""}
-                                    required = {input.required}
-                                    onChange = {this.handleInputOnChange}
-                                    pattern = {input.pattern}
+                <StyledHeader>
+                    <LogoContainer>
+                        <StyledImg src = {Foureddit}/>
+                    </LogoContainer>
+                    <MenuContainer>
+                        <StyledButton onClick = {this.handleLogOut} id = "voltar">log Out</StyledButton>
+                    </MenuContainer>
+                </StyledHeader>
+                <StyledMain>
+                    <BackToTopButton href = "#voltar" id = "voltar">voltar pro topo</BackToTopButton>
+                    <FormContainer>
+                        <form>
+                            {createPostForm.map (input => (
+                                <div key = {input.name}>
+                                    <Label htmlFor = {input.name}>{input.label}</Label>
+                                    <Input
+                                        id = {input.id}
+                                        name = {input.name}
+                                        type = {input.type}
+                                        value = {this.state.form[input.name] || ""}
+                                        required = {input.required}
+                                        onChange = {this.handleInputOnChange}
+                                        pattern = {input.pattern}
+                                    />
+                                </div>
+                            ))}
+                            <Button onClick = {this.handleCreatePost}> Enviar</Button>
+                        </form>
+                    </FormContainer>
+                    {this.props.posts.sort((a,b) => {
+                        if (a.votesCount < b.votesCount) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }).map((post) =>
+                    <CardContainer>
+                        <CardHeader>
+                            <P>{post.username}</P>
+                        </CardHeader>
+                        <CardMain onClick = {() => this.handleSetPostId(post.id)}>
+                            <P>{post.text}</P>
+                        </CardMain>
+                        <CardFooter>
+                            <P>
+                                <StyledArrowUpward 
+                                onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}
+                                color={post.userVoteDirection > 0 ? "secondary" : ""}
                                 />
-                            </div>
-                        ))}
-                        <Button onClick = {this.handleCreatePost}> Enviar</Button>
-                    </form>
-                </FormContainer>
-                {this.props.posts.sort((a,b) => {
-                    if (a.votesCount < b.votesCount) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                }).map((post) =>
-                  <CardContainer>
-                      <CardHeader>
-                        <P>{post.username}</P>
-                      </CardHeader>
-                      <CardMain onClick = {() => this.handleSetPostId(post.id)}>
-                        <P>{post.text}</P>
-                      </CardMain>
-                      <CardFooter>
-                          <P>
-                              <StyledArrowUpward 
-                              onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}
-                              color={post.userVoteDirection > 0 ? "secondary" : ""}
-                              />
-                              {post.votesCount}
-                              <StyledArrowDownward 
-                              onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}
-                              color={post.userVoteDirection < 0 ? "primary" : ""}
-                              />
-                          </P>
-                          <P>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></P>
-                      </CardFooter>
-                  </CardContainer>  
-                )}
+                                {post.votesCount}
+                                <StyledArrowDownward 
+                                onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}
+                                color={post.userVoteDirection < 0 ? "primary" : ""}
+                                />
+                            </P>
+                            <P>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></P>
+                        </CardFooter>
+                    </CardContainer>  
+                    )}
+                </StyledMain>
             </Container>
         )
     }
