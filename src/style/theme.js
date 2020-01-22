@@ -1,11 +1,15 @@
 import { createMuiTheme } from "@material-ui/core";
 import orange from "@material-ui/core/colors/orange";
-import { green } from "@material-ui/core/colors";
+import { green, blue, yellow, brown } from "@material-ui/core/colors";
 
 export default createMuiTheme({
   palette: {
-    primary: orange,
-    secondary: green,
+    primary: {
+      main: '#7f0000'
+    },
+    secondary: {
+      main: '#006064'
+    },
   },
   
 });
