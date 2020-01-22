@@ -81,8 +81,12 @@ class PostDetailsPage extends React.Component{
                             <P>{selectedPost.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <ArrowContainer><ArrowUpward/>{selectedPost.votesCount}<ArrowDownward/></ArrowContainer>
-                            <CommentContainer>{selectedPost.commentsNumber} <Comment/></CommentContainer>
+                            <ArrowContainer>
+                                <ArrowUpward/>{selectedPost.votesCount}<ArrowDownward/>
+                            </ArrowContainer>
+                            <CommentContainer>
+                                {selectedPost.commentsNumber} <Comment/>
+                            </CommentContainer>
                         </CardFooter>
                     </PostContainer>
                 <FormContainer2>
@@ -122,11 +126,11 @@ class PostDetailsPage extends React.Component{
                             <ArrowContainer>
                                 <StyledArrowUpward 
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}
-                                color={comment.userVoteDirection > 1 ? "secondary" : ""}
+                                color={comment.userVoteDirection > 0 ? "secondary" : ""}
                             />
                                     {comment.votesCount}
                                 <StyledArrowDownward
-                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}
+                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, -1, this.props.userVoteDirection)}
                                 color={comment.userVoteDirection > 0 ? "primary" : ""}
                              />
                              </ArrowContainer>
