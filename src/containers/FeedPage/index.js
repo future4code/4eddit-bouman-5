@@ -189,10 +189,6 @@ class FeedPage extends React.Component{
         this.props.goToPostPageDetails()
     }
 
-    // handleUpVoteClick = (postId, direction) => {
-        
-    //     this.props.votePost(postId, direction)
-    // }
 
     render() {
         

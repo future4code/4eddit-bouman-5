@@ -4,12 +4,24 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
-import { getPostDetails, createComment } from "../../actions";
+import { getPostDetails, createComment, voteComment } from "../../actions";
 import Comment from "@material-ui/icons/Comment"
 import ArrowUpward from "@material-ui/icons/ArrowUpward"
 import ArrowDownward from "@material-ui/icons/ArrowDownward"
 
 // Estilização
+
+const StyledArrowUpward = styled(ArrowUpward) `
+    :hover {
+        cursor: pointer;
+    }
+` 
+
+const StyledArrowDownward = styled(ArrowDownward) `
+    :hover {
+        cursor: pointer;
+    }
+` 
 
 const Container = styled.div `
     width: 100%;
@@ -220,7 +232,9 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P><ArrowUpward onClick = {console.log(comment.id)}/>{comment.votesCount}<ArrowDownward/></P>
+                            <P><StyledArrowUpward onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}/>
+                                {comment.votesCount}
+                            <StyledArrowDownward onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}/></P>
                         </CardFooter>
                     </CardContainer>
                 )}
@@ -239,7 +253,19 @@ const mapDispatchToProps = (dispatch) =>({
     goBackToFeed: () => dispatch(push(routes.feed)),
     goToLoginPage: () => dispatch(push(routes.root)),
     getPostDetails: (postId) => dispatch(getPostDetails(postId)),
-    createComment: (text, postId) => dispatch(createComment(text, postId))
+    createComment: (text, postId) => dispatch(createComment(text, postId)),
+    voteComment: ( 
+        postId, 
+        commentId, 
+        direction, 
+        userVoteDirection 
+    ) => dispatch (
+        voteComment ( 
+            postId, 
+            commentId, 
+            direction, 
+            userVoteDirection 
+        ))
 })
 
 
