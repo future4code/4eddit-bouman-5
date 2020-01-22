@@ -108,9 +108,15 @@ class FeedPage extends React.Component{
                       </CardMain>
                       <CardFooter>
                           <P>
-                              <StyledArrowUpward onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}/>
+                              <StyledArrowUpward 
+                              onClick={() => this.props.votePost(post.id, 1, this.props.userVoteDirection)}
+                              color={post.userVoteDirection > 0 ? "secondary" : ""}
+                              />
                               {post.votesCount}
-                              <StyledArrowDownward onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}/>
+                              <StyledArrowDownward 
+                              onClick={() => this.props.votePost(post.id, -1, this.props.userVoteDirection )}
+                              color={post.userVoteDirection < 0 ? "primary" : ""}
+                              />
                           </P>
                           <P>{post.commentsNumber} <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></P>
                       </CardFooter>
