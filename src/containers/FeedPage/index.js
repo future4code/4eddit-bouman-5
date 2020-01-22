@@ -1,131 +1,12 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import styled, { ThemeConsumer } from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index';
-import Comment from "@material-ui/icons/Comment"
-import ArrowUpward from "@material-ui/icons/ArrowUpward"
-import ArrowDownward from "@material-ui/icons/ArrowDownward"
 import { getPosts, createPost, setPostIdAction, votePost } from '../../actions'
-
-// Estilização
-
-const StyledArrowUpward = styled(ArrowUpward) `
-    :hover {
-        cursor: pointer;
-    }
-` 
-
-const StyledArrowDownward = styled(ArrowDownward) `
-    :hover {
-        cursor: pointer;
-    }
-` 
-
-const StyledComment = styled(Comment) `
-    :hover {
-        cursor: pointer;
-    }
-` 
-
-const Container = styled.div `
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-
-`
-
-const CardContainer = styled.div `
-    width: 300px;
-    min-height: 230px;
-    display: grid;
-    grid-template-rows: 40px 2fr 40px;
-    justify-items: center;
-    align-content: center;
-    text-align: center; 
-    margin: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px;
-    :hover {
-        box-shadow: 0px 0px 10px;
-    }
-`
-
-const CardHeader = styled.header `
-    width: 100%;
-    border-bottom: 1px ridge black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-`
-
-const CardMain = styled.main `
-    width: 100%;
-    border-bottom: 1px ridge black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    :hover {
-        cursor: pointer;
-    }
-`
-
-const CardFooter = styled.footer `
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const FormContainer = styled.div `
-    width: 300px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px;
-    margin: 10px;
-    :hover {
-        box-shadow: 0px 0px 10px;
-    }
-`
-
-const P = styled.p `
-    margin: 5px;
-    padding: 0;
-    font-size: 15px;
-`
-
-const Input = styled.input `
-    outline: none;
-    border: 0;
-    width: 90%;
-    border-bottom: 1px solid black;
-    background-color: none;
-    margin-bottom: 20px;
-    :hover {
-        cursor: text;
-    }
-`
-
-const Label = styled.label `
-    font-weight: bolder;
-    font-size: 15px;
-`
+import { StyledArrowUpward, StyledArrowDownward, StyledComment, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, P, Input, Label } from '../FeedPage/styled'
 
 // inputs do formulário
-
 const createPostForm = [
     {
         name: "title",
@@ -141,7 +22,6 @@ const createPostForm = [
     }
 ]
 
-// Código
 class FeedPage extends React.Component{
     constructor(props){
         super(props)
@@ -177,21 +57,16 @@ class FeedPage extends React.Component{
         const { text, title } = this.state.form
 
         this.props.createPost ( text, title )
-
         this.setState({form: {}})
-
-
     }
 
     handleSetPostId = (postId) => {
         this.props.setPostId(postId)
-
         this.props.goToPostPageDetails()
     }
 
 
     render() {
-        
         return(
             <Container>
                 <Button onClick = {this.handleLogOut}>log Out</Button>
@@ -250,7 +125,5 @@ const mapDispatchToProps = (dispatch) => ({
     setPostId: (postId) => dispatch(setPostIdAction(postId)),
     votePost: (postId, direction, userVoteDirection) => (dispatch(votePost(postId, direction, userVoteDirection)))
 })
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedPage);
