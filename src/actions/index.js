@@ -38,50 +38,42 @@ export const setCommentIdAction = (commentId) => ({
 export const votePost = (postId, direction, userVoteDirection) => async (dispatch) => {
     const token = window.localStorage.getItem("token")    
     if (userVoteDirection === direction){
-        try {
-            await Axios.put (
-                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
-                
-                {
-                    "direction": 0,               
-                },
-        
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "auth": token
-                    } 
-                },
-        
-            )
-                dispatch(getPosts())
+
+        const upVote = {
+            direction: 0
         }
-        catch (error) {
-            alert("Ocorreu um erro, tente novamente")
-            console.log(error)
-        }
-    }
-    else{
+
         try {
-            await Axios.put (
-                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/vote`,
-                
-                {
-                    "direction": direction,               
-                },
-        
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "auth": token
-                    } 
-                },
-        
-            )
+            await axios.put (`h${baseUrl}/posts/${postId}/vote`, upVote, {
+                headers: {
+                    auth: token
+                } 
+            })
+            
             dispatch(getPosts())
         } catch (error) {
+
             alert("Ocorreu um erro, tente novamente")
-            console.log(error)
+
+        }
+    } else {
+
+        const downVote = {
+            direction: direction
+        }
+
+        try {
+            await axios.put (`${baseUrl}/posts/${postId}/vote`, downVote, {
+                headers: {
+                    auth: token
+                } 
+            })
+            
+            dispatch(getPosts())
+
+        } catch (error) {
+
+            alert("Ocorreu um erro, tente novamente")
         }
     }
 }
@@ -90,26 +82,47 @@ export const votePost = (postId, direction, userVoteDirection) => async (dispatc
 
 // votar no Comentário
 
-export const voteComment = (postId, commentId, direction) => async (dispatch) => {
+export const voteComment = (postId, commentId, direction, userVoteDirection) => async (dispatch) => {
+    const token = window.localStorage.getItem("token")    
+    if (userVoteDirection === direction){
 
-    const token = window.localStorage.getItem("token")
+        const upVote = {
+            direction: 0
+        }
 
-    const newCommentVoteDirection = {
-        direction,
+        try {
+            await axios.put (`h${baseUrl}/posts/${postId}/comment/${commentId}/vote`, upVote, {
+                headers: {
+                    auth: token
+                } 
+            })
+            
+            dispatch(getPostDetails())
+        } catch (error) {
+
+            alert("erro ao votar")
+
+        }
+    } else {
+
+        const downVote = {
+            direction: direction
+        }
+
+        try {
+            await axios.put (`${baseUrl}/posts/${postId}/comment/${commentId}/vote`, downVote, {
+                headers: {
+                    auth: token
+                } 
+            })
+            
+            dispatch(getPostDetails(postId, commentId))
+
+        } catch (error) {
+
+            alert("erro ao votar")
+        }
     }
-    try {
-        await axios.put (`${baseUrl}/posts/${postId}/comment/${commentId}/vote`, newCommentVoteDirection, {
-            headers: {
-                auth: token
-            }
-        })
-
-        dispatch(getPostDetails(postId, commentId))
-
-    } catch (error) {
-        window.alert("Erro ao votar")
-    }
-    
 }
 
 // ver detalhes de um post
