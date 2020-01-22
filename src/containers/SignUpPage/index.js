@@ -1,11 +1,10 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
 import { signUp } from '../../actions/index'
+import {StyledTextField, StyledButtonForms} from "../FeedPage/styled"
 
 const signUpForm = [
     {
@@ -38,6 +37,8 @@ const SignUpWrapper = styled.form`
   place-content: center;
   justify-items: center;
   display: grid;
+  background-color: rgb(237, 127, 97);
+  color: white;
 `;
 
 
@@ -77,7 +78,7 @@ class SignUpPage extends React.Component{
                 <SignUpWrapper onSubmit={this.handleOnSubmit}>
                     <h1>Cadastre-se</h1>
                     {signUpForm.map(input =>(
-                        <TextField
+                        <StyledTextField
                             onChange={this.handleFieldChange}
                             name={input.name}
                             type={input.type}
@@ -86,7 +87,8 @@ class SignUpPage extends React.Component{
                             pattern={input.pattern}
                         />
                     ))}
-                    <Button onClick={this.onHandleSignUp}> Sign Up </Button>
+                    <StyledButtonForms onClick={this.onHandleSignUp}> Sign Up </StyledButtonForms>
+                    <StyledButtonForms onClick={goToLoginPage}> Voltar </StyledButtonForms>
                 </SignUpWrapper>
                 
             </div>
@@ -100,7 +102,7 @@ const mapStateToProps = (state) =>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-    
+    goToLoginPage: () => dispatch(push(routes.root)),
     signUp: (email, password, username) => dispatch(signUp(email, password, username))
 })
 

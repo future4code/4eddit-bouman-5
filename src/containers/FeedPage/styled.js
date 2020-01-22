@@ -3,6 +3,7 @@ import Comment from "@material-ui/icons/Comment"
 import ArrowUpward from "@material-ui/icons/ArrowUpward"
 import ArrowDownward from "@material-ui/icons/ArrowDownward"
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 // containers
 
@@ -55,7 +56,8 @@ export const Container = styled.div `
     align-items: center;
     justify-content: center;
     background-color: #ffa485;
-
+    font-family: 'Bangers', cursive;
+    
 `
 
 export const CardContainer = styled.div `
@@ -69,6 +71,7 @@ export const CardContainer = styled.div `
     margin: 10px;
     border-radius: 5px;
     box-shadow: 0px 0px 5px;
+    
     :hover {
         box-shadow: 0px 0px 10px;
     }
@@ -143,10 +146,12 @@ export const CardMain = styled.main `
     justify-content: center;
     align-items: center;
     background-color: white;
+    
     :hover {
         cursor: pointer;
         color: black;
-        background-color: #e0e0de;
+        background-color: #eeeeee;
+;
     }
 `
 
@@ -158,6 +163,20 @@ export const CardFooter = styled.footer `
     color: white;
     background-color: rgb(237, 127, 97);
     border-radius: 5px;
+`
+
+export const ArrowContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const CommentContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 5px;
+    width: 40px;
 `
 
 // inputs do formulário
@@ -210,6 +229,17 @@ export const StyledButton = styled(Button) `
     }
 `
 
+export const StyledButtonForms = styled(Button) `
+    cursor: pointer;
+    color: white;
+    width: auto;
+    
+    :hover {
+        border: 1px solid white;
+        background-color: rgb(237, 127, 97);
+    }
+`
+
 // icones material ui
 
 export const StyledArrowUpward = styled(ArrowUpward) `
@@ -229,6 +259,10 @@ export const StyledComment = styled(Comment) `
         cursor: pointer;
     }
 ` 
+
+export const StyledTextField = styled(TextField)`
+    color: white;
+`
 
 // Imagem
 

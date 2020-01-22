@@ -8,7 +8,7 @@ import Comment from "@material-ui/icons/Comment";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Foureddit from "../../4eddit.png"
-import { BackToTopButton, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../FeedPage/styled"
+import { BackToTopButton,ArrowContainer, CommentContainer, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../FeedPage/styled"
 
 // array do input
 const createCommentForm = [
@@ -81,8 +81,8 @@ class PostDetailsPage extends React.Component{
                             <P>{selectedPost.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P><ArrowUpward/>{selectedPost.votesCount}<ArrowDownward/></P>
-                            <P>{selectedPost.commentsNumber} <Comment/></P>
+                            <ArrowContainer><ArrowUpward/>{selectedPost.votesCount}<ArrowDownward/></ArrowContainer>
+                            <CommentContainer>{selectedPost.commentsNumber} <Comment/></CommentContainer>
                         </CardFooter>
                     </PostContainer>
                 <FormContainer2>
@@ -119,7 +119,7 @@ class PostDetailsPage extends React.Component{
                             <P>{comment.text}</P>
                         </CardMain>
                         <CardFooter>
-                            <P>
+                            <ArrowContainer>
                                 <StyledArrowUpward 
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}
                                 color={comment.userVoteDirection > 1 ? "secondary" : ""}
@@ -129,7 +129,7 @@ class PostDetailsPage extends React.Component{
                                 onClick={() => this.props.voteComment(selectedPost.id, comment.id, 0, this.props.userVoteDirection)}
                                 color={comment.userVoteDirection > 0 ? "primary" : ""}
                              />
-                             </P>
+                             </ArrowContainer>
                         </CardFooter>
                     </CardContainer>
                 )}

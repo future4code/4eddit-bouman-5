@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from "../Router"
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import { login } from "../../actions";
+import {StyledTextField, StyledButtonForms} from "../FeedPage/styled"
 
 const LoginWrapper = styled.form`
   width: 100%;
@@ -14,7 +13,11 @@ const LoginWrapper = styled.form`
   place-content: center;
   justify-items: center;
   display: grid;
+  background-color: rgb(237, 127, 97);
+  color: white;
 `;
+
+
 
 class LoginPage extends Component {
   constructor(props) {
@@ -49,22 +52,23 @@ class LoginPage extends Component {
       <form>
         <LoginWrapper>
           <h1>Log in</h1>
-          <TextField
+          <StyledTextField
+            color="primary"
             onChange={this.handleFieldChange}
             name="email"
             type="email"
             label="E-mail"
             value={email}
           />
-          <TextField
+          <StyledTextField
             onChange={this.handleFieldChange}
             name="password"
             type="password"
             label="Password"
             value={password}
           />
-          <Button onClick = {this.handleLoginButton}>Entrar</Button>
-          <Button onClick = {goToSignUpScreen}>Cadastro</Button>
+          <StyledButtonForms onClick = {this.handleLoginButton}>Entrar</StyledButtonForms>
+          <StyledButtonForms onClick = {goToSignUpScreen}>Cadastro</StyledButtonForms>
         </LoginWrapper>
       </form>
     );
