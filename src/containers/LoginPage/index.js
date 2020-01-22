@@ -4,7 +4,8 @@ import { push } from "connected-react-router";
 import { routes } from "../Router"
 import styled from "styled-components";
 import { login } from "../../actions";
-import {StyledTextField, StyledButtonForms} from "../FeedPage/styled"
+import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../FeedPage/styled";
+import FourEddit from "../../4eddit.png";
 
 const LoginWrapper = styled.form`
   width: 100%;
@@ -49,28 +50,33 @@ class LoginPage extends Component {
     const { goToSignUpScreen } = this.props;
 
     return (
-      <form>
-        <LoginWrapper>
-          <h1>Log in</h1>
-          <StyledTextField
-            color="primary"
-            onChange={this.handleFieldChange}
-            name="email"
-            type="email"
-            label="E-mail"
-            value={email}
-          />
-          <StyledTextField
-            onChange={this.handleFieldChange}
-            name="password"
-            type="password"
-            label="Password"
-            value={password}
-          />
-          <StyledButtonForms onClick = {this.handleLoginButton}>Entrar</StyledButtonForms>
-          <StyledButtonForms onClick = {goToSignUpScreen}>Cadastro</StyledButtonForms>
-        </LoginWrapper>
-      </form>
+      <div>
+        <StyledHeaderForms>
+          <StyledImgForms src = {FourEddit} />
+        </StyledHeaderForms>
+        <form>
+          <LoginWrapper>
+            <h1>Log in</h1>
+            <StyledTextField
+              color="primary"
+              onChange={this.handleFieldChange}
+              name="email"
+              type="email"
+              label="E-mail"
+              value={email}
+            />
+            <StyledTextField
+              onChange={this.handleFieldChange}
+              name="password"
+              type="password"
+              label="Password"
+              value={password}
+            />
+            <StyledButtonForms onClick = {this.handleLoginButton}>Entrar</StyledButtonForms>
+            <StyledButtonForms onClick = {goToSignUpScreen}>Cadastro</StyledButtonForms>
+          </LoginWrapper>
+        </form>
+      </div>
     );
   }
 }

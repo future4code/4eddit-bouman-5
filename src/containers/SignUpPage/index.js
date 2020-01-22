@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
 import { signUp } from '../../actions/index'
-import {StyledTextField, StyledButtonForms} from "../FeedPage/styled"
+import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../FeedPage/styled";
+import FourEddit from "../../4eddit.png";
 
 const signUpForm = [
     {
@@ -75,6 +76,9 @@ class SignUpPage extends React.Component{
 
         return(
             <div>
+                <StyledHeaderForms>
+                    <StyledImgForms src = {FourEddit} />
+                </StyledHeaderForms>
                 <SignUpWrapper onSubmit={this.handleOnSubmit}>
                     <h1>Cadastre-se</h1>
                     {signUpForm.map(input =>(

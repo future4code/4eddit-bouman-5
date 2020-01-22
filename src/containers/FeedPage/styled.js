@@ -19,6 +19,18 @@ export const StyledHeader = styled.header `
     top: 0px;
 `
 
+export const StyledHeaderForms = styled.header `
+    width: 100%;
+    min-height: 150px;
+    background-color: rgb(237, 127, 97);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 0px;
+`
+
 export const StyledMain = styled.main `
     width: 100%;
     min-height: 689px;
@@ -262,6 +274,7 @@ export const StyledComment = styled(Comment) `
 
 export const StyledTextField = styled(TextField)`
     color: white;
+    background-color: rgb(237, 127, 97);
 `
 
 // Imagem
@@ -270,7 +283,10 @@ export const StyledTextField = styled(TextField)`
 export const StyledImg = styled.img `
     width: 100px;
     height: 100px;
-    display: grid;
-    grid-column-start: 2;
     margin-left: 20px;
+`
+
+export const StyledImgForms = styled.img `
+    width: 150px;
+    height: 150px;
 `
