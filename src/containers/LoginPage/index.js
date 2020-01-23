@@ -4,8 +4,8 @@ import { push } from "connected-react-router";
 import { routes } from "../Router"
 import styled from "styled-components";
 import { login } from "../../actions";
-import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../FeedPage/styled";
-import FourEddit from "../../4eddit.png";
+import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../../style/styled";
+import Foureddit from "../images/4eddit.png"
 
 const LoginWrapper = styled.form`
   width: 100%;
@@ -52,7 +52,7 @@ class LoginPage extends Component {
     return (
       <div>
         <StyledHeaderForms>
-          <StyledImgForms src = {FourEddit} />
+          <StyledImgForms src = {Foureddit} />
         </StyledHeaderForms>
         <form>
           <LoginWrapper>

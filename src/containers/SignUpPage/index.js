@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index'
 import { signUp } from '../../actions/index'
-import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../FeedPage/styled";
-import FourEddit from "../../4eddit.png";
+import {StyledTextField, StyledButtonForms, StyledHeaderForms, StyledImgForms} from "../../style/styled";
+import Foureddit from "../images/4eddit.png"
 
 const signUpForm = [
     {
@@ -20,7 +20,7 @@ const signUpForm = [
        type: 'email',
        label: 'E-mail: ',
        required: true,
-       pattern: "[A-Za-^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$]{3,}"
+       pattern: "[A-Za-^([a-zA-Z0-9_-.]+)@([a-zA-Z0-9_-.]+).([a-zA-Z]{2,5})$]{3,}",
     },
     {
         name: 'password',
@@ -77,7 +77,7 @@ class SignUpPage extends React.Component{
         return(
             <div>
                 <StyledHeaderForms>
-                    <StyledImgForms src = {FourEddit} />
+                    <StyledImgForms src = {Foureddit} />
                 </StyledHeaderForms>
                 <SignUpWrapper onSubmit={this.handleOnSubmit}>
                     <h1>Cadastre-se</h1>
@@ -101,10 +101,6 @@ class SignUpPage extends React.Component{
 
 }
 
-const mapStateToProps = (state) =>({
-    
-})
-
 const mapDispatchToProps = (dispatch) =>({
     goToLoginPage: () => dispatch(push(routes.root)),
     signUp: (email, password, username) => dispatch(signUp(email, password, username))
@@ -112,4 +108,4 @@ const mapDispatchToProps = (dispatch) =>({
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);
+export default connect(null, mapDispatchToProps)(SignUpPage);
