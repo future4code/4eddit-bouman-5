@@ -238,8 +238,12 @@ export const signUp = (email, password, username) => async (dispatch) =>{
         username,
     }
 
-    
+    try {
         await axios.post(`${baseUrl}/signup`, signUp)
         dispatch(push(routes.root))
+        window.alert("Conta criada com sucesso")
+    } catch (error) {
+        window.alert("Conta existente")
+    }
     
 }
