@@ -7,8 +7,9 @@ import { getPostDetails, createComment, voteComment } from "../../actions";
 import Comment from "@material-ui/icons/Comment";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import Foureddit from "../../4eddit.png"
-import { BackToTopButton,ArrowContainer, CommentContainer, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../FeedPage/styled"
+import Foureddit from "../images/4eddit.png";
+import Loader from "../../components/Loader"
+import { BackToTopButton,ArrowContainer, CommentContainer, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../../style/styled"
 
 // array do input
 const createCommentForm = [
@@ -57,9 +58,52 @@ class PostDetailsPage extends React.Component{
         this.setState({form: {}})
     }
 
+    handleScrollToTop = () => {
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
     render() {
 
-        const { goBackToFeed, selectedPost } = this.props
+        const { goBackToFeed, voteComment, userVoteDirection, selectedPost } = this.props
+
+        const commentIsReady = selectedPost.comments && selectedPost.comments.length === 0 ? <Loader/> :  (
+            <div>
+                {selectedPost.comments && selectedPost.comments.sort((a,b) => {
+                    if (a.votesCount < b.votesCount) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }).map((comment) =>
+                    <CardContainer key={comment.id}>
+                        <CardHeader>
+                            <P>{comment.username}</P>
+                        </CardHeader>
+                        <CardMain>
+                            <P>{comment.text}</P>
+                        </CardMain>
+                        <CardFooter>
+                            <ArrowContainer>
+                                <StyledArrowUpward 
+                                onClick={() => voteComment(selectedPost.id, comment.id, 1, userVoteDirection)}
+                                color={comment.userVoteDirection > 0 ? "secondary" : "inherit"}
+                            />
+                                    {comment.votesCount}
+                                <StyledArrowDownward
+                                onClick={() => voteComment(selectedPost.id, comment.id, -1, userVoteDirection)}
+                                color={comment.userVoteDirection < 0 ? "primary" : "inherit"}
+                            />  
+                            </ArrowContainer>
+                        </CardFooter>
+                    </CardContainer>
+                )}
+            </div>
+        )
+
+        console.log(selectedPost.comments && selectedPost.comments.length)
         
         return(
             <Container>
@@ -68,11 +112,11 @@ class PostDetailsPage extends React.Component{
                         <StyledImg src = {Foureddit}/>
                     </LogoContainer>
                     <MenuContainer>
-                        <StyledButton onClick = {goBackToFeed} id = "voltar">Voltar</StyledButton>
+                        <StyledButton onClick = {goBackToFeed}>Voltar</StyledButton>
                     </MenuContainer>
                 </StyledHeader>
                 <StyledMain>
-                    <BackToTopButton href = "#voltar" id = "voltar">voltar pro topo</BackToTopButton>
+                    <BackToTopButton onClick={this.handleScrollToTop}>voltar pro topo</BackToTopButton>
                     <PostContainer>
                         <CardHeader>
                             <P>{selectedPost.username}</P>
@@ -89,54 +133,26 @@ class PostDetailsPage extends React.Component{
                             </CommentContainer>
                         </CardFooter>
                     </PostContainer>
-                <FormContainer2>
-                    <form>
-                        {createCommentForm.map (input => (
-                            <div key = {input.name}>
-                                <Label htmlFor = {input.name}>{input.label}</Label>
-                                <Input
-                                    id = {input.id}
-                                    name = {input.name}
-                                    type = {input.type}
-                                    value = {this.state.form[input.name] || ""}
-                                    required = {input.required}
-                                    onChange = {this.handleInputOnChange}
-                                    pattern = {input.pattern}
-                                />
-                            </div>
-                        ))}
-                        <Button onClick = {this.handleCreateComment}> Enviar</Button>
-                    </form>
-                </FormContainer2>
-                {selectedPost.comments && selectedPost.comments.sort((a,b) => {
-                    if (a.votesCount < b.votesCount) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                }).map((comment) =>
-                    <CardContainer>
-                        <CardHeader>
-                            <P>{comment.username}</P>
-                        </CardHeader>
-                        <CardMain>
-                            <P>{comment.text}</P>
-                        </CardMain>
-                        <CardFooter>
-                            <ArrowContainer>
-                                <StyledArrowUpward 
-                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, 1, this.props.userVoteDirection)}
-                                color={comment.userVoteDirection > 0 ? "secondary" : ""}
-                            />
-                                    {comment.votesCount}
-                                <StyledArrowDownward
-                                onClick={() => this.props.voteComment(selectedPost.id, comment.id, -1, this.props.userVoteDirection)}
-                                color={comment.userVoteDirection < 0 ? "primary" : ""}
-                             />
-                             </ArrowContainer>
-                        </CardFooter>
-                    </CardContainer>
-                )}
+                    <FormContainer2>
+                        <form>
+                            {createCommentForm.map (input => (
+                                <div key={input.name}>
+                                    <Label htmlFor = {input.name}>{input.label}</Label>
+                                    <Input
+                                        id = {input.id}
+                                        name = {input.name}
+                                        type = {input.type}
+                                        value = {this.state.form[input.name] || ""}
+                                        required = {input.required}
+                                        onChange = {this.handleInputOnChange}
+                                        pattern = {input.pattern}
+                                    />
+                                </div>
+                            ))}
+                            <Button onClick = {this.handleCreateComment}> Enviar</Button>
+                        </form>
+                    </FormContainer2>
+                    {commentIsReady}
                 </StyledMain>
             </Container>
         )

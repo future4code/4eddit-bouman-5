@@ -219,14 +219,18 @@ export const Label = styled.label `
 
 export const BackToTopButton = styled(Button) `
     position: fixed;
-    right: 50px;
-    bottom: 5%;
-    color: white;
+    right: 4%;
+    bottom: 2%;
+    color: black;
     width: auto;
+    box-shadow: 0 0 5px;
+    background-color: white;
+    border-radius: 10px;
+    transition-timing-function: linear;
     :hover {
         cursor: pointer;
         border: 1px solid white;
-        background-color: rgb(237, 127, 97);
+        background-color: white;
     }
 ` 
 
@@ -277,6 +281,11 @@ export const StyledTextField = styled(TextField)`
     background-color: rgb(237, 127, 97);
 `
 
+export const StyledSearchTextField = styled(TextField)`
+    color: white;
+    margin: 20px;
+`
+
 // Imagem
 
 
@@ -290,3 +299,4 @@ export const StyledImgForms = styled.img `
     width: 150px;
     height: 150px;
 `
+

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import  { push } from 'connected-react-router'
 import { routes } from '../containers/Router';
-import Axios from 'axios';
 
 const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
