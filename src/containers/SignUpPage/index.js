@@ -60,11 +60,11 @@ class SignUpPage extends React.Component{
     };
 
     handleOnSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.form)
+        
     }
 
-    onHandleSignUp = () =>{
+    handleOnSubmit = (event) =>{
+        event.preventDefault();
         const { email, password, username } = this.state.form
         this.props.signUp(email, password, username)
         this.setState({form: {}})
@@ -91,7 +91,7 @@ class SignUpPage extends React.Component{
                             pattern={input.pattern}
                         />
                     ))}
-                    <StyledButtonForms onClick={this.onHandleSignUp}> Sign Up </StyledButtonForms>
+                    <StyledButtonForms type="submit"> Sign Up </StyledButtonForms>
                     <StyledButtonForms onClick={goToLoginPage}> Voltar </StyledButtonForms>
                 </SignUpWrapper>
                 

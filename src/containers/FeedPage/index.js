@@ -1,14 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Button from "@material-ui/core/Button";
-import styled from 'styled-components';
 import PropTypes from 'prop-types'
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router/index';
 import { getPosts, createPost, setPostIdAction, votePost } from '../../actions';
-import Foureddit from "../images/4eddit.png";
-import Loader from "../../components/Loader"
-import { BackToTopButton, ArrowContainer, StyledSearchTextField, CommentContainer, StyledImg, StyledHeader, StyledMain, LogoContainer, MenuContainer, StyledButton, StyledArrowUpward, StyledArrowDownward, StyledComment, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer, P, Input, Label } from '../../style/styled'
+import Loader from "../../components/Loader";
+import Header from "../../components/Header";
+import { BackToTopButton, ArrowContainer, PostTitle, PostName, StyledSearchTextField, FormWrapper, CommentContainer, StyledMain, StyledArrowUpward, StyledArrowDownward, StyledComment, Container, PostCardContainer, CardHeader, CardMain, CardFooter, CreatePostContainer, P, Input, Label } from '../../style/styled'
 
 // inputs do formulário
 const createPostForm = [
@@ -25,16 +24,6 @@ const createPostForm = [
         required: true
     }
 ]
-
-const LoginWrapper = styled.form`
-  width: 100%;
-  height: auto;
-  gap: 10px;
-  place-content: center;
-  justify-items: center;
-  display: grid;
-  color: white;
-`;
 
 class FeedPage extends React.Component{
     constructor(props){
@@ -96,8 +85,7 @@ class FeedPage extends React.Component{
 
     render() {
         const { posts } = this.state;
-
-        const { votePost, userVoteDirection } = this.props;
+        const { votePost } = this.props;
 
         let filterPosts = this.props.posts.filter(
             (post) => {
@@ -105,53 +93,56 @@ class FeedPage extends React.Component{
             }
         );
 
+        let orderedPosts;
+
+        if (filterPosts) {
+            orderedPosts = filterPosts.sort((a,b) => {
+                if (a.votesCount < b.votesCount) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            })
+        }
+
         const postIsReady = this.props.posts.length === 0 ? <Loader/> :  (
-            <div>
-                {filterPosts.sort((a,b) => {
-                    if (a.votesCount < b.votesCount) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                }).map((post) =>
-                    <CardContainer key={post.id}>
+            <Fragment>
+                {orderedPosts.map((post) =>
+                    <PostCardContainer key={post.id}>
                         <CardHeader>
-                            <P>{post.username}</P>
+                            <PostName>{post.username}</PostName>
                         </CardHeader>
                         <CardMain onClick = {() => this.handleSetPostId(post.id)}>
+                            <PostTitle>{post.title}</PostTitle>
                             <P>{post.text}</P>
                         </CardMain>
                         <CardFooter>
                             <ArrowContainer>
                                 <StyledArrowUpward 
-                                onClick={() => votePost(post.id, 1, userVoteDirection)}
-                                color={post.userVoteDirection > 0 ? "secondary" : "inherit"}
+                                    onClick={() => votePost(post.id, 1)}
+                                    color={post.userVoteDirection > 0 ? "secondary" : "inherit"}
                                 />
                                 {post.votesCount}
                                 <StyledArrowDownward 
-                                onClick={() => votePost(post.id, -1, userVoteDirection )}
-                                color={post.userVoteDirection < 0 ? "primary" : "inherit"}
+                                    onClick={() => votePost(post.id, -1)}
+                                    color={post.userVoteDirection < 0 ? "primary" : "inherit"}
                                 />
                             </ArrowContainer>
-                            <CommentContainer>{post.commentsNumber}   <StyledComment onClick = {() => this.handleSetPostId(post.id)}/></CommentContainer>
+                            <CommentContainer>
+                                {post.commentsNumber}
+                                <StyledComment onClick={() => this.handleSetPostId(post.id)}/>
+                            </CommentContainer>
                         </CardFooter>
-                    </CardContainer>  
+                    </PostCardContainer>  
                 )}
-            </div>
+            </Fragment>
         )
 
         return(
             <Container>
-                <StyledHeader>
-                    <LogoContainer>
-                        <StyledImg src = {Foureddit}/>
-                    </LogoContainer>
-                    <MenuContainer>
-                        <StyledButton onClick={this.handleLogOut}>log Out</StyledButton>
-                    </MenuContainer>
-                </StyledHeader>
+                <Header onClick={this.handleLogOut} text={'Log Out'}></Header>
                 <StyledMain>
-                    <LoginWrapper>
+                    <FormWrapper>
                         <StyledSearchTextField
                             color="primary"
                             onChange={this.handleFieldChange.bind(this)}
@@ -160,9 +151,9 @@ class FeedPage extends React.Component{
                             label="Search"
                             value={posts}
                         />
-                    </LoginWrapper>
+                    </FormWrapper>
                     <BackToTopButton onClick={this.handleScrollToTop}>voltar pro topo</BackToTopButton>
-                    <FormContainer>
+                    <CreatePostContainer>
                         <form>
                             {createPostForm.map (input => (
                                 <div key={input.name}>
@@ -171,6 +162,7 @@ class FeedPage extends React.Component{
                                         id = {input.id}
                                         name = {input.name}
                                         type = {input.type}
+                                        label = {input.label}
                                         value = {this.state.form[input.name] || ""}
                                         required = {input.required}
                                         onChange = {this.handleInputOnChange}
@@ -180,13 +172,12 @@ class FeedPage extends React.Component{
                             ))}
                             <Button onClick = {this.handleCreatePost}> Enviar</Button>
                         </form>
-                    </FormContainer>
+                    </CreatePostContainer>
                     {postIsReady}
                 </StyledMain>
             </Container>
         )
     }
-
 }
 
 FeedPage.propTypes = {
@@ -209,7 +200,7 @@ const mapDispatchToProps = (dispatch) => ({
     getPosts: () => dispatch(getPosts()),
     createPost: ( text, title ) => dispatch(createPost( text, title )),
     setPostId: (postId) => dispatch(setPostIdAction(postId)),
-    votePost: (postId, direction, userVoteDirection) => (dispatch(votePost(postId, direction, userVoteDirection)))
+    votePost: (postId, direction) => (dispatch(votePost(postId, direction)))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedPage);

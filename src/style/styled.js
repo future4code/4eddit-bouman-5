@@ -89,7 +89,7 @@ export const CardContainer = styled.div `
     }
 `
 
-export const FormContainer = styled.div `
+export const CreatePostContainer = styled.div `
     width: 300px;
     min-height: 200px;
     display: flex;
@@ -106,8 +106,9 @@ export const FormContainer = styled.div `
     }
 `
 
-export const FormContainer2 = styled.div `
+export const CreateCommentContainer = styled.div `
     width: 300px;
+    max-width: 300px;
     min-height: 100px;
     display: flex;
     flex-direction: column;
@@ -123,10 +124,27 @@ export const FormContainer2 = styled.div `
     }
 `
 
-export const PostContainer = styled.div `
+export const PostCardContainer = styled.div `
     width: 300px;
+    max-width: 300px;
     min-height: 200px;
-    display: flex;
+    display: grid;
+    grid-template-rows: 40px 2fr 30px;
+    justify-items: center;
+    align-content: center;
+    text-align: center; 
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px;
+    :hover {
+        box-shadow: 0px 0px 10px;
+    }
+`
+
+export const CommentCardContainer = styled.div `
+    width: 300px;
+    max-width: 300px;
+    min-height: 150px;
     display: grid;
     grid-template-rows: 40px 2fr 30px;
     justify-items: center;
@@ -154,16 +172,18 @@ export const CardHeader = styled.header `
 
 export const CardMain = styled.main `
     width: 100%;
+    max-width: 301px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     background-color: white;
-    
+    word-wrap: break-word;
+    padding: 3px;
     :hover {
         cursor: pointer;
         color: black;
         background-color: #eeeeee;
-;
     }
 `
 
@@ -196,7 +216,21 @@ export const CommentContainer = styled.span`
 export const P = styled.p `
     margin: 5px;
     padding: 0;
+    max-width: 300px;
     font-size: 15px;
+`
+
+export const PostName = styled.h2 `
+    margin: 5px;
+    max-width: 300px;
+    padding: 0;
+`
+
+export const PostTitle = styled.h3 `
+    margin: 5px;
+    padding: 0;
+    max-width: 300px;
+    border-bottom: 1px solid black;
 `
 
 export const Input = styled.input `
@@ -299,4 +333,14 @@ export const StyledImgForms = styled.img `
     width: 150px;
     height: 150px;
 `
+// formulário
 
+export const FormWrapper = styled.form`
+    width: 100%;
+    height: auto;
+    gap: 10px;
+    place-content: center;
+    justify-items: center;
+    display: grid;
+    color: white;
+`;

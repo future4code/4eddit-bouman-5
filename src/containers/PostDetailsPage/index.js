@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
@@ -7,9 +7,10 @@ import { getPostDetails, createComment, voteComment } from "../../actions";
 import Comment from "@material-ui/icons/Comment";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import Foureddit from "../images/4eddit.png";
-import Loader from "../../components/Loader"
-import { BackToTopButton,ArrowContainer, CommentContainer, StyledButton, StyledImg, StyledMain, StyledHeader, LogoContainer, MenuContainer, StyledArrowUpward, StyledArrowDownward, Container, CardContainer, CardHeader, CardMain, CardFooter, FormContainer2, PostContainer, P, Input, Label } from "../../style/styled"
+import Loader from "../../components/Loader";
+import Header from "../../components/Header";
+import PropTypes from "prop-types";
+import { BackToTopButton,ArrowContainer, PostName, PostTitle, CommentContainer, StyledMain,StyledArrowUpward, StyledArrowDownward, Container, CommentCardContainer, CardHeader, CardMain, CardFooter, CreateCommentContainer, PostCardContainer, P, Input, Label } from "../../style/styled"
 
 // array do input
 const createCommentForm = [
@@ -67,18 +68,24 @@ class PostDetailsPage extends React.Component{
 
     render() {
 
-        const { goBackToFeed, voteComment, userVoteDirection, selectedPost } = this.props
+        const { goBackToFeed, voteComment, selectedPost } = this.props
 
-        const commentIsReady = selectedPost.comments && selectedPost.comments.length === 0 ? <Loader/> :  (
-            <div>
-                {selectedPost.comments && selectedPost.comments.sort((a,b) => {
-                    if (a.votesCount < b.votesCount) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                }).map((comment) =>
-                    <CardContainer key={comment.id}>
+        let orderedComments;
+
+        if(selectedPost.comments){
+            orderedComments = selectedPost.comments.sort((a,b) => {
+                if (a.votesCount < b.votesCount) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            })
+        }
+
+        const commentIsReady = !selectedPost.comments ? <Loader/> :  (
+            <Fragment>
+                {orderedComments.map((comment) =>
+                    <CommentCardContainer key={comment.id}>
                         <CardHeader>
                             <P>{comment.username}</P>
                         </CardHeader>
@@ -88,40 +95,33 @@ class PostDetailsPage extends React.Component{
                         <CardFooter>
                             <ArrowContainer>
                                 <StyledArrowUpward 
-                                onClick={() => voteComment(selectedPost.id, comment.id, 1, userVoteDirection)}
+                                onClick={() => voteComment(selectedPost.id, comment.id, 1)}
                                 color={comment.userVoteDirection > 0 ? "secondary" : "inherit"}
                             />
                                     {comment.votesCount}
                                 <StyledArrowDownward
-                                onClick={() => voteComment(selectedPost.id, comment.id, -1, userVoteDirection)}
+                                onClick={() => voteComment(selectedPost.id, comment.id, -1)}
                                 color={comment.userVoteDirection < 0 ? "primary" : "inherit"}
                             />  
                             </ArrowContainer>
                         </CardFooter>
-                    </CardContainer>
+                    </CommentCardContainer>
                 )}
-            </div>
+            </Fragment>
         )
 
-        console.log(selectedPost.comments && selectedPost.comments.length)
         
         return(
             <Container>
-                <StyledHeader>
-                    <LogoContainer>
-                        <StyledImg src = {Foureddit}/>
-                    </LogoContainer>
-                    <MenuContainer>
-                        <StyledButton onClick = {goBackToFeed}>Voltar</StyledButton>
-                    </MenuContainer>
-                </StyledHeader>
+                <Header onClick={goBackToFeed} text={'Voltar'}></Header>
                 <StyledMain>
                     <BackToTopButton onClick={this.handleScrollToTop}>voltar pro topo</BackToTopButton>
-                    <PostContainer>
+                    <PostCardContainer>
                         <CardHeader>
-                            <P>{selectedPost.username}</P>
+                        <PostName>{selectedPost.username}</PostName>
                         </CardHeader>
                         <CardMain>
+                            <PostTitle>{selectedPost.title}</PostTitle>
                             <P>{selectedPost.text}</P>
                         </CardMain>
                         <CardFooter>
@@ -132,8 +132,8 @@ class PostDetailsPage extends React.Component{
                                 {selectedPost.commentsNumber} <Comment/>
                             </CommentContainer>
                         </CardFooter>
-                    </PostContainer>
-                    <FormContainer2>
+                    </PostCardContainer>
+                    <CreateCommentContainer>
                         <form>
                             {createCommentForm.map (input => (
                                 <div key={input.name}>
@@ -142,6 +142,7 @@ class PostDetailsPage extends React.Component{
                                         id = {input.id}
                                         name = {input.name}
                                         type = {input.type}
+                                        label = {input.label}
                                         value = {this.state.form[input.name] || ""}
                                         required = {input.required}
                                         onChange = {this.handleInputOnChange}
@@ -151,12 +152,22 @@ class PostDetailsPage extends React.Component{
                             ))}
                             <Button onClick = {this.handleCreateComment}> Enviar</Button>
                         </form>
-                    </FormContainer2>
+                    </CreateCommentContainer>
                     {commentIsReady}
                 </StyledMain>
             </Container>
         )
     }
+}
+
+PostDetailsPage.propTypes = {
+    goBackToFeed: PropTypes.func.isRequired,
+    goToLoginPage: PropTypes.func.isRequired,
+    getPostDetails: PropTypes.func.isRequired,
+    createComment: PropTypes.func.isRequired,
+    selectedPostId: PropTypes.func.isRequired,
+    voteComment: PropTypes.func.isRequired,
+    selectedPost: PropTypes.object,
 }
 
 const mapStateToProps = (state) =>({
@@ -169,7 +180,7 @@ const mapDispatchToProps = (dispatch) =>({
     goToLoginPage: () => dispatch(push(routes.root)),
     getPostDetails: (postId) => dispatch(getPostDetails(postId)),
     createComment: (text, postId) => dispatch(createComment(text, postId)),
-    voteComment: ( postId, commentId, direction, userVoteDirection ) => dispatch (voteComment ( postId, commentId, direction, userVoteDirection ))
+    voteComment: ( postId, commentId, direction ) => dispatch (voteComment ( postId, commentId, direction ))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsPage);

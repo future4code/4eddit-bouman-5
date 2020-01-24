@@ -52,7 +52,7 @@ export const votePost = (postId, direction, userVoteDirection) => async (dispatc
             dispatch(getPosts())
         } catch (error) {
 
-            alert("Ocorreu um erro, tente novamente")
+            window.alert("Ocorreu um erro, tente novamente")
 
         }
     } else {
@@ -72,7 +72,7 @@ export const votePost = (postId, direction, userVoteDirection) => async (dispatc
 
         } catch (error) {
 
-            alert("Ocorreu um erro, tente novamente")
+            window.alert("Ocorreu um erro, tente novamente")
         }
     }
 }
@@ -244,6 +244,5 @@ export const signUp = (email, password, username) => async (dispatch) =>{
         window.alert("Conta criada com sucesso")
     } catch (error) {
         window.alert("Conta existente")
-    }
-    
+    }  
 }
