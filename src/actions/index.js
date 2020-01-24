@@ -224,7 +224,7 @@ export const login = (email, password) => async (dispatch) => {
         window.localStorage.setItem("token", response.data.token)
         dispatch(push(routes.feed))
     } catch (error) {
-        // window.alert("Usuário ou senha inválidos")
+        window.alert("Usuário ou senha inválidos")
     }
 
 }
