@@ -35,7 +35,8 @@ class LoginPage extends Component {
     });
   }
 
-  handleLoginButton = () => {
+  handleFormSubmit = (event) => {
+    event.preventDefault()
     const { email, password } = this.state;
 
     this.props.login ( email, password )
@@ -54,8 +55,7 @@ class LoginPage extends Component {
         <StyledHeaderForms>
           <StyledImgForms src = {Foureddit} />
         </StyledHeaderForms>
-        <form>
-          <LoginWrapper>
+          <LoginWrapper onSubmit={this.handleFormSubmit}>
             <h1>Log in</h1>
             <StyledTextField
               color="primary"
@@ -63,6 +63,7 @@ class LoginPage extends Component {
               name="email"
               type="email"
               label="E-mail"
+              required
               value={email}
             />
             <StyledTextField
@@ -70,12 +71,12 @@ class LoginPage extends Component {
               name="password"
               type="password"
               label="Password"
+              required
               value={password}
             />
-            <StyledButtonForms onClick = {this.handleLoginButton}>Entrar</StyledButtonForms>
+            <StyledButtonForms type="submit">Entrar</StyledButtonForms>
             <StyledButtonForms onClick = {goToSignUpScreen}>Cadastro</StyledButtonForms>
           </LoginWrapper>
-        </form>
       </div>
     );
   }
