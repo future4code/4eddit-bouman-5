@@ -28,8 +28,8 @@ class PostDetailsPage extends React.Component{
         super(props)
         this.state = {
             form: {}
-        }
-    }
+        };
+    };
 
     componentDidMount() {
         const token = window.localStorage.getItem("token")
@@ -39,15 +39,14 @@ class PostDetailsPage extends React.Component{
             this.props.getPostDetails(this.props.selectedPostId)
         } else {
             this.props.goBackToFeed()
-        }
-    }
+        };
+    };
 
     handleInputOnChange = event => {
         const { name, value } = event.target;
 
         this.setState ({ form: { ...this.state.form, [name]: value }});
-
-    }
+    };
 
     handleCreateComment = event => {
         event.preventDefault();
@@ -57,17 +56,16 @@ class PostDetailsPage extends React.Component{
 
         this.props.createComment ( text, selectedPostId  )
         this.setState({form: {}})
-    }
+    };
 
     handleScrollToTop = () => {
         window.scroll({
             top: 0,
             behavior: 'smooth'
         });
-    }
-
+    };
+    
     render() {
-
         const { goBackToFeed, voteComment, selectedPost } = this.props
 
         let orderedComments;
@@ -79,8 +77,8 @@ class PostDetailsPage extends React.Component{
                 } else {
                     return -1;
                 }
-            })
-        }
+            });
+        };
 
         const commentIsReady = !selectedPost.comments ? <Loader/> :  (
             <Fragment>
@@ -110,7 +108,6 @@ class PostDetailsPage extends React.Component{
             </Fragment>
         )
 
-        
         return(
             <Container>
                 <Header onClick={goBackToFeed} text={'Voltar'}></Header>
@@ -134,7 +131,7 @@ class PostDetailsPage extends React.Component{
                         </CardFooter>
                     </PostCardContainer>
                     <CreateCommentContainer>
-                        <form>
+                        <form onSubmit={this.handleCreateComment}>
                             {createCommentForm.map (input => (
                                 <div key={input.name}>
                                     <Label htmlFor = {input.name}>{input.label}</Label>
@@ -150,7 +147,7 @@ class PostDetailsPage extends React.Component{
                                     />
                                 </div>
                             ))}
-                            <Button onClick = {this.handleCreateComment}> Enviar</Button>
+                            <Button type="submit"> Enviar</Button>
                         </form>
                     </CreateCommentContainer>
                     {commentIsReady}
@@ -172,7 +169,7 @@ PostDetailsPage.propTypes = {
 
 const mapStateToProps = (state) =>({
     selectedPostId: state.posts.selectedPostId,
-    selectedPost: state.posts.selectedPost
+    selectedPost: state.posts.selectedPost,
 })
 
 const mapDispatchToProps = (dispatch) =>({
@@ -180,7 +177,7 @@ const mapDispatchToProps = (dispatch) =>({
     goToLoginPage: () => dispatch(push(routes.root)),
     getPostDetails: (postId) => dispatch(getPostDetails(postId)),
     createComment: (text, postId) => dispatch(createComment(text, postId)),
-    voteComment: ( postId, commentId, direction ) => dispatch (voteComment ( postId, commentId, direction ))
+    voteComment: ( postId, commentId, direction ) => dispatch (voteComment ( postId, commentId, direction )),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsPage);

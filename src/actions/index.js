@@ -4,7 +4,7 @@ import { routes } from '../containers/Router';
 
 const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/fourEddit"
 
-
+// pegar posts
 const setPostAction = (posts) => ({
     type: "SET_POSTS_ACTION",
     payload: {
@@ -12,6 +12,7 @@ const setPostAction = (posts) => ({
     }
 }) 
 
+// pegar o ID do post
 export const setPostIdAction = (postId) => ({
     type: "SET_POST_ID_ACTION",
     payload: {
@@ -19,6 +20,7 @@ export const setPostIdAction = (postId) => ({
     }
 })
 
+// pegar os detalhes de um post
 export const setPostDetailAction = (postDetail) => ({
     type: "SET_POST_DETAIL",
     payload: {
@@ -26,6 +28,7 @@ export const setPostDetailAction = (postDetail) => ({
     }
 })
 
+// pegar o ID de um comentário
 export const setCommentIdAction = (commentId) => ({
     type: "SET_COMMENT_ID_ACTION",
     payload: {
@@ -33,11 +36,11 @@ export const setCommentIdAction = (commentId) => ({
     }
 })
 
-
+// votar no Post
 export const votePost = (postId, direction, userVoteDirection) => async (dispatch) => {
     const token = window.localStorage.getItem("token")    
     if (userVoteDirection === direction){
-
+        
         const upVote = {
             direction: 0
         }
@@ -56,7 +59,7 @@ export const votePost = (postId, direction, userVoteDirection) => async (dispatc
 
         }
     } else {
-
+        
         const downVote = {
             direction: direction
         }
@@ -80,7 +83,6 @@ export const votePost = (postId, direction, userVoteDirection) => async (dispatc
 
 
 // votar no Comentário
-
 export const voteComment = (postId, commentId, direction, userVoteDirection) => async (dispatch) => {
     const token = window.localStorage.getItem("token")    
     if (userVoteDirection === direction){
@@ -125,7 +127,6 @@ export const voteComment = (postId, commentId, direction, userVoteDirection) => 
 }
 
 // ver detalhes de um post
-
 export const getPostDetails = (postId) => async (dispatch) => {
 
     const token = window.localStorage.getItem("token")
@@ -146,7 +147,6 @@ export const getPostDetails = (postId) => async (dispatch) => {
 }
 
 // mostrar postagens
-
 export const getPosts = () => async (dispatch) => {
 
     const token = window.localStorage.getItem("token")
@@ -164,7 +164,6 @@ export const getPosts = () => async (dispatch) => {
 }
 
 // criar comentário
-
 export const createComment = (text, postId) => async (dispatch) => {
 
     const newComment = {
@@ -188,7 +187,6 @@ export const createComment = (text, postId) => async (dispatch) => {
 }
 
 // criar post
-
 export const createPost = (text, title) => async (dispatch) => {
     
     const newPost = {
@@ -212,7 +210,6 @@ export const createPost = (text, title) => async (dispatch) => {
 } 
 
 // logar na conta
-
 export const login = (email, password) => async (dispatch) => {
 
     const login = {
@@ -230,7 +227,6 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // Função de cadastro
-
 export const signUp = (email, password, username) => async (dispatch) =>{
     const signUp = {
         email,
