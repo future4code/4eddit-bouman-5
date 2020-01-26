@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Comment from "@material-ui/icons/Comment"
 import ArrowUpward from "@material-ui/icons/ArrowUpward"
 import ArrowDownward from "@material-ui/icons/ArrowDownward"
@@ -344,3 +344,19 @@ export const FormWrapper = styled.form`
     display: grid;
     color: white;
 `;
+
+// loader animado 
+
+export const Loading = styled.text `
+    font-size: 9px;
+    text-align: center;
+`
+
+const dash = keyframes  `
+    100% { stroke-dashoffset: 136; }
+`
+
+export const Triangle = styled.polygon`
+    stroke-dasharray: 17;
+    animation: ${dash} 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+`

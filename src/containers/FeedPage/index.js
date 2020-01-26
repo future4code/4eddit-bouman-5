@@ -31,8 +31,8 @@ class FeedPage extends React.Component{
         this.state = {
             form: {},
             search: "",
-        }
-    }
+        };
+    };
 
     componentDidMount() {
         const token = window.localStorage.getItem("token")
@@ -40,19 +40,19 @@ class FeedPage extends React.Component{
           this.props.goToLoginPage()
         } else {
             this.props.getPosts()
-        }
-    }
+        };
+    };
 
     handleLogOut = () => {
         localStorage.removeItem("token")
         this.props.goToLoginPage()
-    }
+    };
 
     handleInputOnChange = event => {
         const { name, value } = event.target;
 
         this.setState ({ form: { ...this.state.form, [name]: value }});
-    }
+    };
 
     handleFieldChange = event => {
         this.setState({
@@ -60,7 +60,7 @@ class FeedPage extends React.Component{
         });
 
         this.setState({ search: event.target.value })
-      }
+    };
 
     handleCreatePost = event => {
         event.preventDefault();
@@ -69,27 +69,27 @@ class FeedPage extends React.Component{
 
         this.props.createPost ( text, title )
         this.setState({form: {}})
-    }
+    };
 
     handleSetPostId = (postId) => {
         this.props.setPostId(postId)
         this.props.goToPostPageDetails()
-    }
+    };
 
     handleScrollToTop = () => {
         window.scroll({
             top: 0,
             behavior: 'smooth'
         });
-    }
+    };
 
     render() {
         const { posts } = this.state;
         const { votePost } = this.props;
 
-        let filterPosts = this.props.posts.filter(
-            (post) => {
-                return post.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || post.text.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+        let filterPosts = this.props.posts.filter((post) => {
+                return post.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || 
+                post.text.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
             }
         );
 
@@ -102,8 +102,8 @@ class FeedPage extends React.Component{
                 } else {
                     return -1;
                 }
-            })
-        }
+            });
+        };
 
         const postIsReady = this.props.posts.length === 0 ? <Loader/> :  (
             <Fragment>
@@ -154,7 +154,7 @@ class FeedPage extends React.Component{
                     </FormWrapper>
                     <BackToTopButton onClick={this.handleScrollToTop}>voltar pro topo</BackToTopButton>
                     <CreatePostContainer>
-                        <form>
+                        <form onSubmit={this.handleCreatePost}>
                             {createPostForm.map (input => (
                                 <div key={input.name}>
                                     <Label htmlFor = {input.name}>{input.label}</Label>
@@ -170,7 +170,7 @@ class FeedPage extends React.Component{
                                     />
                                 </div>
                             ))}
-                            <Button onClick = {this.handleCreatePost}> Enviar</Button>
+                            <Button type="submit"> Enviar</Button>
                         </form>
                     </CreatePostContainer>
                     {postIsReady}
